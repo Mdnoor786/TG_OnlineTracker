@@ -60,6 +60,7 @@ THE SOFTWARE.
 
 
 
+
 import time
 
 from pyrogram import Client
@@ -94,28 +95,21 @@ with Client(session_name,APP_ID,API_HASH) as app:
     print("Starting bot")
 
     while True:
-      try:
-          yeah = app.get_users(USER)
-      except:
-          pass
-      
-      if yeah.status=="online":
-        online=True
-        
-      else:
-        online=False
-              
-        
-      
-      if not globonline == online:
+        try:
+            yeah = app.get_users(USER)
+        except:
+            pass
+
+        online = yeah.status=="online"
+        if globonline != online:
          
-         if online == True:
-            #print("User came online")
-            app.send_message(DUMP_CHAT,"User came online")
-         else:
-            #print("User went offline")
-            app.send_message(DUMP_CHAT,"User went offline")
-         globonline = online
-      time.sleep(UPDATE_TIME)
-        
+            if online:
+                #print("User came online")
+                app.send_message(DUMP_CHAT,"User came online")
+            else:
+                #print("User went offline")
+                app.send_message(DUMP_CHAT,"User went offline")
+            globonline = online
+        time.sleep(UPDATE_TIME)
+
 print("System Crashed with unknown reason")
